@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>Map Project</title>
+      <link href="css/style.css" rel="stylesheet">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <script type='text/javascript' src='js/knockout-3.4.2.js'></script>
+   </head>
+   <body>
+      <header class="header">
+         <div class="header__inner">
+            <a id="menu" class="header__menu">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
+               </svg>
+            </a>
+         </div>
+      </header>
+      <div class="container">
+         <nav id="drawer" class="options-box nav">
+            <h1>Hissah Locations</h1>
+            <hr>
+            <div>
+               <input id="filter-input" type="text" placeholder="Enter your area" data-bind="textInput: keywords">
+               <input id="filter-button" type="button" value="Filter" data-bind="click: filterclick">
+            </div>
+            <hr>
+            <div>
+               <ul data-bind="foreach: list">
+                  <li>
+                     <a href="#" data-bind="text: $data.title, click: $parent.clickLink.bind($data, $index())"></a>
+                  </li>
+               </ul>
+            </div>
+            <div>
+               <input id="show-listings" type="button" value="Show Listings" data-bind="click: showAll">
+               <input id="hide-listings" type="button" value="Hide Listings" data-bind="click: hideAll">
+               <hr>
+            </div>
+         </nav>
+         <main>
+            <div id="map" ></div>
+         </main>
+      </div>
+      <script async src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="js/main.js"> </script>
+      <script async
+         src=
+         "https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=[YOUR_API_KEY]&v=3&callback=initMap"></script>
+   </body>
+</html>
