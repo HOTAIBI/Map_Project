@@ -74,7 +74,7 @@ function ViewModel() {
         drawer.classList.remove('open');
     };
     self.filterclick = function() {
-      if (self.keywords()==""){
+      if (self.keywords() ===""){
         alert("Please enter search keywords ");
       }
       else{
@@ -111,14 +111,11 @@ ko.applyBindings(new ViewModel());
 
 function creatMaker(list) {
     markers = [];
-    largeInfowindow = new google.maps.InfoWindow();
+    
     // Style the markers a bit. This will be our listing marker icon.
     var defaultIcon = makeMarkerIcon('0091ff');
 
-    // Create a "highlighted location" marker color for when the user
-    // mouses over the marker.
-    var highlightedIcon = makeMarkerIcon('FFFF24');
-
+    
     // The following group uses the location array to create an array of markers on initialize.
     for (var i = 0; i < list.length; i++) {
         // Get the position from the location array.
@@ -135,19 +132,29 @@ function creatMaker(list) {
         // Push the marker to our array of markers.
         markers.push(marker);
         // Create an onclick event to open the large infowindow at each marker.
-        marker.addListener('click', function() {
-            populateInfoWindow(this, largeInfowindow);
-        });
+        marker.addListener('click', ClickMaker);
         // Two event listeners - one for mouseover, one for mouseout,
         // to change the colors back and forth.
-        marker.addListener('mouseover', function() {
-            this.setIcon(highlightedIcon);
-        });
-        marker.addListener('mouseout', function() {
-            this.setIcon(defaultIcon);
-        });
+        marker.addListener('mouseover', mouseoverFunction);
+        marker.addListener('mouseout', mouseoutFunction);
     }
 
+}
+function ClickMaker() {
+largeInfowindow = new google.maps.InfoWindow();
+ populateInfoWindow(this, largeInfowindow);
+}
+function mouseoverFunction() {
+// Create a "highlighted location" marker color for when the user
+    // mouses over the marker.
+    var highlightedIcon = makeMarkerIcon('FFFF24');
+ this.setIcon(highlightedIcon);
+}
+
+function mouseoutFunction() {
+// Style the markers a bit. This will be our listing marker icon.
+    var defaultIcon = makeMarkerIcon('0091ff');
+ this.setIcon(defaultIcon);
 }
 
 function initMap() {
@@ -184,6 +191,7 @@ function populateInfoWindow(marker, infowindow) {
         infowindow.open(map, marker);
     }
 }
+
 
 function gewiki(marker, infowindow) {
 
@@ -242,3 +250,4 @@ function makeMarkerIcon(markerColor) {
         new google.maps.Size(21, 34));
     return markerImage;
 }
+
