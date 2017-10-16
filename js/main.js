@@ -67,10 +67,10 @@ function ViewModel() {
     self.list = ko.observableArray(locations);
 
     self.clickLink = function(index) {
-
-        largeInfowindow.marker = null;
-
+ largeInfowindow = new google.maps.InfoWindow();
+map.panTo(markers[index].getPosition());
         populateInfoWindow(markers[index], largeInfowindow);
+
         drawer.classList.remove('open');
     };
     self.filterclick = function() {
@@ -111,11 +111,11 @@ ko.applyBindings(new ViewModel());
 
 function creatMaker(list) {
     markers = [];
-    
+
     // Style the markers a bit. This will be our listing marker icon.
     var defaultIcon = makeMarkerIcon('0091ff');
 
-    
+
     // The following group uses the location array to create an array of markers on initialize.
     for (var i = 0; i < list.length; i++) {
         // Get the position from the location array.
@@ -176,6 +176,7 @@ function initMap() {
 // one infowindow which will open at the marker that is clicked, and populate based
 // on that markers position.
 function populateInfoWindow(marker, infowindow) {
+
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
         // Clear the infowindow content to give the streetview time to load.
@@ -250,4 +251,7 @@ function makeMarkerIcon(markerColor) {
         new google.maps.Size(21, 34));
     return markerImage;
 }
-
+//ErrorHandlingFunction
+function ErrorHandlingFunction(){
+  alert("Error when connect to Google API");
+}
