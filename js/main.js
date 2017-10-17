@@ -16,6 +16,7 @@ main.addEventListener('click', function() {
 var map;
 // Create a new blank array for all the listing markers.
 var markers = [];
+var markersActive;
 var largeInfowindow;
 var locations = [{
         title: 'Kingdom Centre',
@@ -178,9 +179,15 @@ function initMap() {
 // one infowindow which will open at the marker that is clicked, and populate based
 // on that markers position.
 function populateInfoWindow(marker, infowindow) {
+  var defaultIcon = makeMarkerIcon('0091ff');
+
+  if (markersActive != marker && markersActive!=null){
+    markersActive.setIcon(defaultIcon);
+  }
 map.panTo(marker.getPosition());
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
+      markersActive=marker
       var highlightedIcon = makeMarkerIcon('FFFF24');
       marker.setIcon(highlightedIcon);
         // Clear the infowindow content to give the streetview time to load.
@@ -188,7 +195,6 @@ map.panTo(marker.getPosition());
         infowindow.marker = marker;
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick', function() {
-          var defaultIcon = makeMarkerIcon('0091ff');
        marker.setIcon(defaultIcon);
             infowindow.marker = null;
         });
