@@ -68,7 +68,7 @@ function ViewModel() {
 
     self.clickLink = function(index) {
  largeInfowindow = new google.maps.InfoWindow();
-map.panTo(markers[index].getPosition());
+
         populateInfoWindow(markers[index], largeInfowindow);
 
         drawer.classList.remove('open');
@@ -135,16 +135,18 @@ function creatMaker(list) {
         marker.addListener('click', ClickMaker);
         // Two event listeners - one for mouseover, one for mouseout,
         // to change the colors back and forth.
-        marker.addListener('mouseover', mouseoverFunction);
-        marker.addListener('mouseout', mouseoutFunction);
+      //  marker.addListener('mouseover', mouseoverFunction);
+      //  marker.addListener('mouseout', mouseoutFunction);
     }
 
 }
 function ClickMaker() {
 largeInfowindow = new google.maps.InfoWindow();
+
  populateInfoWindow(this, largeInfowindow);
+
 }
-function mouseoverFunction() {
+/*function mouseoverFunction() {
 // Create a "highlighted location" marker color for when the user
     // mouses over the marker.
     var highlightedIcon = makeMarkerIcon('FFFF24');
@@ -155,7 +157,7 @@ function mouseoutFunction() {
 // Style the markers a bit. This will be our listing marker icon.
     var defaultIcon = makeMarkerIcon('0091ff');
  this.setIcon(defaultIcon);
-}
+}*/
 
 function initMap() {
 
@@ -176,14 +178,18 @@ function initMap() {
 // one infowindow which will open at the marker that is clicked, and populate based
 // on that markers position.
 function populateInfoWindow(marker, infowindow) {
-
+map.panTo(marker.getPosition());
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
+      var highlightedIcon = makeMarkerIcon('FFFF24');
+      marker.setIcon(highlightedIcon);
         // Clear the infowindow content to give the streetview time to load.
         infowindow.setContent('');
         infowindow.marker = marker;
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick', function() {
+          var defaultIcon = makeMarkerIcon('0091ff');
+       marker.setIcon(defaultIcon);
             infowindow.marker = null;
         });
 
