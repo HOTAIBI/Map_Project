@@ -181,13 +181,13 @@ function initMap() {
 function populateInfoWindow(marker, infowindow) {
   var defaultIcon = makeMarkerIcon('0091ff');
 
-  if (markersActive != marker && markersActive!=null){
+  if (markersActive != marker && markersActive){
     markersActive.setIcon(defaultIcon);
   }
 map.panTo(marker.getPosition());
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
-      markersActive=marker
+      markersActive=marker;
       var highlightedIcon = makeMarkerIcon('FFFF24');
       marker.setIcon(highlightedIcon);
         // Clear the infowindow content to give the streetview time to load.
@@ -267,3 +267,4 @@ function makeMarkerIcon(markerColor) {
 function ErrorHandlingFunction(){
   alert("Error when connect to Google API");
 }
+
